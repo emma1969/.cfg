@@ -1,0 +1,19 @@
+OS="$(uname -s)"
+case "${OS}" in
+     Darwin*)
+         alias fixApp="xattr -d com.apple.quarantine"
+	 ;;
+     Linux*)
+	 ;;
+esac	
+alias config='/usr/bin/env git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias down_pass="rsync -avP -e 'ssh -p 1989' emma@girlboss.gaslight.love:~/.password-store/ ~/.password-store"
+alias up_pass="rsync -avP -e 'ssh -p 1989' ~/.password-store/ emma@girlboss.gaslight.love:~/.password-store"
+
+function config_add_all_previous(){
+	 FILES="$(config ls-tree -r master --name-only)"
+	 for f in $FILES
+	 do
+	   config add $f
+	 done
+}

@@ -1,0 +1,5 @@
+#!/bin/sh
+git config --global user.name Emma
+git config --global user.email eemmaa@waifu.club
+git config --global user.signingkey 2F85AA34B4BDBBBFFC552724607E71B54FC4F8E0
+git config --global commit.gpgsign true

@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+sudo ls 2&>1 /dev/null
+
+python3 -c 'import venv'
+if [ "$?" -ne 0 ]
+then
+  install+=" python3-full python3-venv"
+fi
+python3 -c 'import setuptools'
+if [ "$?" -ne 0 ]
+then
+  install+=" python3-setuptools"
+fi
+python3 -c 'import pip'
+if [ "$?" -ne 0 ]
+then
+  install+=" python3-pip"
+fi
+if ! command -v git 2>&1 >/dev/null
+then
+    gitinstall="YES"
+fi
+if ! command -v xdms 2>&1 >/dev/null
+then
+    xdmsinstall=" xdms"
+fi
+
+function perform_install() {
+    mkdir ~/tools
+    cd ~/tools
+    python3 -m venv ./python_tools
+    source ./python_tools/bin/activate
+    python3 -m pip install PySSTV
+    git clone "https://github.com/colaclanth/sstv.git"
+    cd ./sstv
+    python3 setup.py install
+    case "${OS}" in
+	Darwin*)
+	    git clone "https://gitlab.com/heikkiorsila/xdms"
+	    cd ./xdms
+	    ./configure
+	    make
+	    ;;
+     esac
+}
+
+function perform_prereq_install(){
+    echo "INSTALLING REQUIRED PACKAGES"
+    OS=$(uname -s)
+    case "${OS}" in
+	Darwin*)
+	    echo "oh no"
+         if [ -z "$gitinstall"  ]; then
+	     brew install python
+	 else
+	     brew install git python
+	 fi
+	 ;;
+     Linux*)
+	 echo "prereq"
+         source /etc/os-release
+	 case "${ID}" in
+	     debian*)
+		  if [ -z "$gitinstall" ]
+		  then
+		     `sudo apt install -y$install$xdmsinstall`
+		  else
+		     `sudo apt install -y$install$xdmsinstall git`
+		  fi
+		  ;;
+	 esac
+	 ;;
+    esac
+
+}
+
+
+if [ -z "$install" ] && [ -z "$gitinstall"]
+then
+    perform_install
+else
+    perform_prereq_install
+    perform_install
+fi
+
+
+
