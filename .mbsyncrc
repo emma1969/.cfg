@@ -1,0 +1,26 @@
+IMAPAccount Emma
+Host mail.cock.li
+Port 993
+User eemmaa@waifu.club
+PassCmd "pass mail.cock.li/eemmaa@waifu.club"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore Emma-remote
+Account Emma
+
+MaildirStore Emma-local
+SubFolders Verbatim
+Path ~/Mail/Emma/
+Inbox ~/Mail/Emma/Inbox
+Trash ~/Mail/Emma/Trash
+
+Channel Emma
+Far :Emma-remote:
+Near :Emma-local:
+Patterns INBOX "Sent Items" Drafts Trash Spam?
+SyncState *
+Create Both
+Expunge Both
+CopyArrivalDate yes
+Sync All
