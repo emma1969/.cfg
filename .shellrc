@@ -1,0 +1,21 @@
+#aliases 
+. ~/.aliases
+
+# My silly prompt
+PROMPT="🐭%F{111}%B%n%b%f💻%F{91}%m%f%F{91}:💾%F{196}%1~%B%(!.#.>)%b%f"
+
+
+
+TOOLS="~/tools"
+PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+
+# custom functions
+function config_add_all_previous(){
+  cd ~/
+  IFS=$'\n' FILES=($(config ls-tree -r master --name-only))
+  for f in $FILES
+  do
+     config add $f
+  done
+  IFS=$' \t\n'
+}
