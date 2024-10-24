@@ -8,7 +8,7 @@ case "${OS}" in
 	 ;;
 esac	
 
-alias config='/usr/bin/env git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias dot_config='/usr/bin/env git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias down_pass="rsync -avP -e 'ssh -p 1989' emma@girlboss.gaslight.love:~/.password-store/ ~/.password-store"
 alias up_pass="rsync -avP -e 'ssh -p 1989' ~/.password-store/ emma@girlboss.gaslight.love:~/.password-store"
 alias pytools="~/tools/python_tools/bin/activate"

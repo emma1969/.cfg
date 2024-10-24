@@ -10,9 +10,9 @@ TOOLS="~/tools"
 PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 
 # custom functions
-function config_add_all_previous(){
+function dot_config_add_all(){
   cd ~/
-  IFS=$'\n' FILES=($(config ls-tree -r master --name-only))
+  IFS=$'\n' FILES=($(dot_config ls-tree -r master --name-only))
   for f in $FILES
   do
      config add $f
